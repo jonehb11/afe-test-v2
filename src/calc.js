@@ -4,4 +4,4 @@ function add(a, b) {
 
 module.exports = { add };
 
-function whileDown(){ return 1; }
+function restored(){ return 2; }
