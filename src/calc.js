@@ -3,3 +3,5 @@ function add(a, b) {
 }
 
 module.exports = { add };
+
+function whileDown(){ return 1; }
