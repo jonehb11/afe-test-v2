@@ -10,6 +10,8 @@ on:
       open_pr:     { description: "open a PR", required: false, default: "true", type: string }
       from_base:   { description: "branch off base (else reuse existing branch)", required: false, default: "true", type: string }
       merge_base:  { description: "merge base into branch (update-branch simulation)", required: false, default: "false", type: string }
+      author_name: { description: "git author name", required: false, default: "approval-freshness-engine[bot]", type: string }
+      author_email: { description: "git author email", required: false, default: "301932845+approval-freshness-engine[bot]@users.noreply.github.com", type: string }
 
 permissions:
   contents: write
@@ -24,8 +26,8 @@ jobs:
 
       - name: Configure identity
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "${{ inputs.author_name }}"
+          git config user.email "${{ inputs.author_email }}"
 
       - name: Prepare branch
         run: |
@@ -79,12 +81,3 @@ jobs:
             git push origin "${{ inputs.branch }}"
           fi
 
-      - name: Open PR
-        if: inputs.open_pr == 'true'
-        env: { GH_TOKEN: "${{ github.token }}" }
-        run: |
-          if ! gh pr view "${{ inputs.branch }}" >/dev/null 2>&1; then
-            gh pr create --base "${{ inputs.base }}" --head "${{ inputs.branch }}" \
-              --title "testbed: ${{ inputs.branch }}" --body "harness scenario"
-          fi
-          gh pr view "${{ inputs.branch }}" --json number,url,headRefOid
