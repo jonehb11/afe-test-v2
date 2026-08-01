@@ -1,6 +1,6 @@
 function total(items) {
-  const sum = items.reduce((a, b) => a + b, 0);
-  return sum;
+  const accumulated = items.reduce((a, b) => a + b, 0);
+  return accumulated;
 }
 
 function label(x) {
