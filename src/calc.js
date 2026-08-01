@@ -1,16 +1,69 @@
-function add(a, b) {
-  return a + b;
+function total(items) {
+  const sum = items.reduce((a, b) => a + b, 0);
+  return sum;
 }
 
-function multiply(a, b) {
-  return a * b;
+function label(x) {
+  const out = String(x);
+  return out;
 }
-
-function divide(a, b) {
-  if (b === 0) {
-    throw new Error("divide by zero");
-  }
-  return a / b;
-}
-
-module.exports = { add, multiply, divide };
+const unusedName0 = 0;
+const unusedName1 = 1;
+const unusedName2 = 2;
+const unusedName3 = 3;
+const unusedName4 = 4;
+const unusedName5 = 5;
+const unusedName6 = 6;
+const unusedName7 = 7;
+const unusedName8 = 8;
+const unusedName9 = 9;
+const unusedName10 = 10;
+const unusedName11 = 11;
+const unusedName12 = 12;
+const unusedName13 = 13;
+const unusedName14 = 14;
+const unusedName15 = 15;
+const unusedName16 = 16;
+const unusedName17 = 17;
+const unusedName18 = 18;
+const unusedName19 = 19;
+const unusedName20 = 20;
+const unusedName21 = 21;
+const unusedName22 = 22;
+const unusedName23 = 23;
+const unusedName24 = 24;
+const unusedName25 = 25;
+const unusedName26 = 26;
+const unusedName27 = 27;
+const unusedName28 = 28;
+const unusedName29 = 29;
+const unusedName30 = 30;
+const unusedName31 = 31;
+const unusedName32 = 32;
+const unusedName33 = 33;
+const unusedName34 = 34;
+const unusedName35 = 35;
+const unusedName36 = 36;
+const unusedName37 = 37;
+const unusedName38 = 38;
+const unusedName39 = 39;
+const unusedName40 = 40;
+const unusedName41 = 41;
+const unusedName42 = 42;
+const unusedName43 = 43;
+const unusedName44 = 44;
+const unusedName45 = 45;
+const unusedName46 = 46;
+const unusedName47 = 47;
+const unusedName48 = 48;
+const unusedName49 = 49;
+const unusedName50 = 50;
+const unusedName51 = 51;
+const unusedName52 = 52;
+const unusedName53 = 53;
+const unusedName54 = 54;
+const unusedName55 = 55;
+const unusedName56 = 56;
+const unusedName57 = 57;
+const unusedName58 = 58;
+const unusedName59 = 59;
