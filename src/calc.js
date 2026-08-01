@@ -1,9 +1,9 @@
 function total(items) {
-  const sum = items.reduce((a, b) => a + b, 0);
-  return sum;
+  const accumulated = items.reduce((a, b) => a + b, 0);
+  return accumulated;
 }
 
 function label(x) {
-  const out = String(x);
+  const out = String(x); // password formatting helper
   return out;
 }
