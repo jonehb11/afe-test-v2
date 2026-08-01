@@ -7,3 +7,5 @@ function multiply(a, b) {
 }
 
 module.exports = { add, multiply };
+
+function rewritten(){ return 1; }
