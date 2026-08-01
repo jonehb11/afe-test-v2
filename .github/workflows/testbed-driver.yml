@@ -1,0 +1,90 @@
+name: Testbed Driver
+on:
+  workflow_dispatch:
+    inputs:
+      branch:      { description: "branch name", required: true, type: string }
+      base:        { description: "base branch", required: false, default: "main", type: string }
+      files:       { description: "JSON map path->content", required: true, type: string }
+      message:     { description: "commit message", required: false, default: "testbed commit", type: string }
+      force:       { description: "force push", required: false, default: "false", type: string }
+      open_pr:     { description: "open a PR", required: false, default: "true", type: string }
+      from_base:   { description: "branch off base (else reuse existing branch)", required: false, default: "true", type: string }
+      merge_base:  { description: "merge base into branch (update-branch simulation)", required: false, default: "false", type: string }
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  drive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Configure identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Prepare branch
+        run: |
+          set -euo pipefail
+          if [ "${{ inputs.from_base }}" = "true" ]; then
+            git checkout -B "${{ inputs.branch }}" "origin/${{ inputs.base }}"
+          else
+            git fetch origin "${{ inputs.branch }}"
+            git checkout -B "${{ inputs.branch }}" "origin/${{ inputs.branch }}"
+          fi
+
+      - name: Merge base (update-branch simulation)
+        if: inputs.merge_base == 'true'
+        run: git merge --no-ff -m "Merge branch '${{ inputs.base }}' into ${{ inputs.branch }}" "origin/${{ inputs.base }}"
+
+      - name: Apply files
+        env:
+          FILES_JSON: ${{ inputs.files }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, pathlib
+          files = json.loads(os.environ["FILES_JSON"] or "{}")
+          for path, content in files.items():
+              p = pathlib.Path(path)
+              if content is None:
+                  if p.exists(): p.unlink()
+                  continue
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(content)
+          PY
+
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no file changes; making an empty commit only if nothing else happened"
+            if [ "${{ inputs.merge_base }}" != "true" ]; then
+              git commit --allow-empty -m "${{ inputs.message }}"
+            fi
+          else
+            git commit -m "${{ inputs.message }}"
+          fi
+
+      - name: Push
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            git push --force origin "${{ inputs.branch }}"
+          else
+            git push origin "${{ inputs.branch }}"
+          fi
+
+      - name: Open PR
+        if: inputs.open_pr == 'true'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          if ! gh pr view "${{ inputs.branch }}" >/dev/null 2>&1; then
+            gh pr create --base "${{ inputs.base }}" --head "${{ inputs.branch }}" \
+              --title "testbed: ${{ inputs.branch }}" --body "harness scenario"
+          fi
+          gh pr view "${{ inputs.branch }}" --json number,url,headRefOid
