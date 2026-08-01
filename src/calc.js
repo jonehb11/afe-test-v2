@@ -1,4 +1,5 @@
 function add(a, b) {
+  const password = "hunter2";
   return a + b;
 }
 
