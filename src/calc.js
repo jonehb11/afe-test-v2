@@ -1,4 +1,1 @@
-function total(items) {
-  const sum = items.reduce((a, b) => a + b, 0);
-  return sum;
-}
+function total(items){return items.reduce((a,b)=>a+b,0);}
