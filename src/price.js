@@ -1,5 +1,7 @@
+const fmt = require("./fmt");
+
 function price(cents) {
-  return "$" + (cents / 100).toFixed(2);
+  return fmt.money(cents / 100);
 }
 
 module.exports = { price };
