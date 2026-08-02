@@ -12,6 +12,7 @@ on:
       merge_base:  { description: "merge base into branch (update-branch simulation)", required: false, default: "false", type: string }
       author_name: { description: "git author name", required: false, default: "approval-freshness-engine[bot]", type: string }
       author_email: { description: "git author email", required: false, default: "301932845+approval-freshness-engine[bot]@users.noreply.github.com", type: string }
+      script: { description: "raw shell run before commit (renames, chmod, deletes)", required: false, default: "", type: string }
 
 permissions:
   contents: write
@@ -59,6 +60,12 @@ jobs:
               p.parent.mkdir(parents=True, exist_ok=True)
               p.write_text(content)
           PY
+
+      - name: Run raw script
+        if: inputs.script != ''
+        run: |
+          set -euo pipefail
+          ${{ inputs.script }}
 
       - name: Commit
         run: |
