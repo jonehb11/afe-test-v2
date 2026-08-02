@@ -1,6 +1,6 @@
 function rate(u) {
   if (!u.verified) throw new Error("unverified");
-  return u.premium ? 50 : 5;
+  return u.premium ? 100 : 10;
 }
 
 module.exports = { rate };
