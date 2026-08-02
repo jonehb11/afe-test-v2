@@ -1,16 +1,3 @@
-function add(a, b) {
-  return a + b;
-}
+function total(items){return items.reduce((a,b)=>a+b,0);}
 
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  if (b === 0) {
-    throw new Error("divide by zero");
-  }
-  return a / b;
-}
-
-module.exports = { add, multiply, divide };
+function label(x){return String(x);}
