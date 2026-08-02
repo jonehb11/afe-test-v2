@@ -1,9 +1,5 @@
-function isAdmin(user) {
-  return user.role === "admin";
+function isAdmin(u){
+  return u.role === "admin";
 }
 
-function canDelete(user) {
-  return isAdmin(user);
-}
-
-module.exports = { isAdmin, canDelete };
+module.exports = { isAdmin };
