@@ -1,7 +1,1 @@
-const b = require("./b");
-
-function run() {
-  return b();
-}
-
-module.exports = { run };
+const a = require("./a");\nconst b = require("./b");\n\nfunction run() {\n  return b();\n}\n\nmodule.exports = { run };\n
