@@ -1,2 +1,3 @@
 # Guide
-Documentation for the test bed.
+
+Updated prose.
