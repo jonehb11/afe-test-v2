@@ -1,11 +1,11 @@
 function subtotal(items) {
-  const sum = items.reduce((a, b) => a + b, 0);
-  return sum;
+  const runningTotal = items.reduce((a, b) => a + b, 0);
+  return runningTotal;
 }
 
 function withTax(amount, rate) {
-  const total = amount * (1 + rate);
-  return total;
+  const grandTotal = amount * (1 + rate);
+  return grandTotal;
 }
 
 module.exports = { subtotal, withTax };
