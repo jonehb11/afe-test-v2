@@ -1,16 +1,6 @@
-function add(a, b) {
-  return a + b;
-}
+const helper = require("./helper");
 
-function multiply(a, b) {
-  return a * b;
+function total(items) {
+  const accumulated = items.reduce((a, b) => a + b, 0);
+  return accumulated;
 }
-
-function divide(a, b) {
-  if (b === 0) {
-    throw new Error("divide by zero");
-  }
-  return a / b;
-}
-
-module.exports = { add, multiply, divide };
