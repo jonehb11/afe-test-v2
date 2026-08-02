@@ -1,5 +1,1 @@
-function rate(u) {
-  return u.premium ? 100 : 10;
-}
-
-module.exports = { rate };
+function rate(u) {\n  return u.premium ? 100 : 10;\n}\n\nmodule.exports = { rate };\n
